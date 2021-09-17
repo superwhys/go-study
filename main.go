@@ -1,6 +1,9 @@
 package main
 
-import "gitee.com/SuperYongs/go-study/helloworld"
+import (
+	"go-study/helloworld"
+)
+
 
 func main() {
 	helloworld.PrintHello()
