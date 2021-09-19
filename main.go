@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-study/helloworld"
+	"gitee.com/SuperYongs/go-study/helloworld"
 )
 
 
