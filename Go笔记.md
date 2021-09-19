@@ -1,5 +1,4 @@
 # Go
-
 ### 一、准备
 
 笔记博客地址：https://www.liwenzhou.com/posts/Go/go_menu/
