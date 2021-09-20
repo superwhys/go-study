@@ -1,4 +1,5 @@
 # Go
+
 ### 一、准备
 
 笔记博客地址：https://www.liwenzhou.com/posts/Go/go_menu/
@@ -9,7 +10,7 @@
 
 1. 程序
 
-![image-20210807222244007](pic/image-20210807222244007.png)
+![image-20210807222244007](pic/image-20210807222244007-2116019.png)
 
 2. 编译
 
@@ -284,24 +285,13 @@ moduledemo
 这个时候，我们需要在`moduledemo/go.mod`中按如下定义：
 
 ```go
-module moduledemo
-
-go 1.14
+module moduledemogo 1.14
 ```
 
 然后在`moduledemo/main.go`中按如下方式导入`mypackage`
 
 ```go
-package main
-
-import (
-	"fmt"
-	"moduledemo/mypackage"  // 导入同一项目下的mypackage包
-)
-func main() {
-	mypackage.New()
-	fmt.Println("main")
-}
+package mainimport (	"fmt"	"moduledemo/mypackage"  // 导入同一项目下的mypackage包)func main() {	mypackage.New()	fmt.Println("main")}
 ```
 
 举个例子
@@ -309,19 +299,13 @@ func main() {
 举一反三，假设我们现在有文件目录结构如下：
 
 ```bash
-└── bubble
-    ├── dao
-    │   └── mysql.go
-    ├── go.mod
-    └── main.go
+└── bubble    ├── dao    │   └── mysql.go    ├── go.mod    └── main.go
 ```
 
 其中`bubble/go.mod`内容如下：
 
 ```go
-module github.com/q1mi/bubble
-
-go 1.14
+module github.com/q1mi/bubblego 1.14
 ```
 
 `bubble/dao/mysql.go`内容如下：
@@ -369,22 +353,13 @@ func main() {
 这个时候，`mypackage`也需要进行module初始化，即拥有一个属于自己的`go.mod`文件，内容如下：
 
 ```go
-module mypackage
-
-go 1.14
+module mypackagego 1.14
 ```
 
 然后我们在`moduledemo/main.go`中按如下方式导入：
 
 ```go
-import (
-	"fmt"
-	"mypackage"
-)
-func main() {
-	mypackage.New()
-	fmt.Println("main")
-}
+import (	"fmt"	"mypackage")func main() {	mypackage.New()	fmt.Println("main")}
 ```
 
 因为这两个包不在同一个项目路径下，你想要导入本地包，并且这些包也没有发布到远程的github或其他代码仓库地址。这个时候我们就需要在`go.mod`文件中使用`replace`指令。
@@ -392,13 +367,7 @@ func main() {
 在调用方也就是`moduledemo/go.mod`中按如下方式指定使用相对路径来寻找`mypackage`这个包。
 
 ```go
-module moduledemo
-
-go 1.14
-
-
-require "mypackage" v0.0.0
-replace "mypackage" => "../mypackage"
+module moduledemogo 1.14require "mypackage" v0.0.0replace "mypackage" => "../mypackage"
 ```
 
 举个例子
@@ -408,12 +377,7 @@ replace "mypackage" => "../mypackage"
 我们现在有文件目录结构如下：
 
 ```bash
-├── p1
-│   ├── go.mod
-│   └── main.go
-└── p2
-    ├── go.mod
-    └── p2.go
+├── p1│   ├── go.mod│   └── main.go└── p2    ├── go.mod    └── p2.go
 ```
 
 `p1/main.go`中想要导入`p2.go`中定义的函数。
@@ -421,22 +385,13 @@ replace "mypackage" => "../mypackage"
 `p2/go.mod`内容如下：
 
 ```go
-module liwenzhou.com/q1mi/p2
-
-go 1.14
+module liwenzhou.com/q1mi/p2go 1.14
 ```
 
 `p1/main.go`中按如下方式导入
 
 ```go
-import (
-	"fmt"
-	"liwenzhou.com/q1mi/p2"
-)
-func main() {
-	p2.New()
-	fmt.Println("main")
-}
+import (	"fmt"	"liwenzhou.com/q1mi/p2")func main() {	p2.New()	fmt.Println("main")}
 ```
 
 因为我并没有把`liwenzhou.com/q1mi/p2`这个包上传到`liwenzhou.com`这个网站，我们只是想导入本地的包，这个时候就需要用到`replace`这个指令了。
@@ -444,13 +399,7 @@ func main() {
 `p1/go.mod`内容如下：
 
 ```go
-module github.com/q1mi/p1
-
-go 1.14
-
-
-require "liwenzhou.com/q1mi/p2" v0.0.0
-replace "liwenzhou.com/q1mi/p2" => "../p2"
+module github.com/q1mi/p1go 1.14require "liwenzhou.com/q1mi/p2" v0.0.0replace "liwenzhou.com/q1mi/p2" => "../p2"
 ```
 
 
@@ -515,15 +464,7 @@ func main() {
 在使用多重赋值时，如果想要忽略某个值，可以使用`匿名变量（anonymous variable）`。 匿名变量用一个下划线`_`表示，例如： 
 
 ```go
-func foo() (int, string) {
-	return 10, "Q1mi"
-}
-func main() {
-	x, _ := foo()
-	_, y := foo()
-	fmt.Println("x=", x)
-	fmt.Println("y=", y)
-}
+func foo() (int, string) {	return 10, "Q1mi"}func main() {	x, _ := foo()	_, y := foo()	fmt.Println("x=", x)	fmt.Println("y=", y)}
 ```
 
 匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在`Lua`等编程语言里，匿名变量也被叫做哑元变量。)
@@ -539,8 +480,7 @@ func main() {
 相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把`var`换成了`const`，常量在定义的时候必须赋值。
 
 ```go
-const pi = 3.1415
-const e = 2.7182
+const pi = 3.1415const e = 2.7182
 ```
 
 声明了`pi`和`e`这两个常量之后，在整个程序运行期间它们的值都不能再发生变化了。
@@ -548,20 +488,13 @@ const e = 2.7182
 多个常量也可以一起声明：
 
 ```go
-const (
-    pi = 3.1415
-    e = 2.7182
-)
+const (    pi = 3.1415    e = 2.7182)
 ```
 
 const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。 例如：
 
 ```go
-const (
-    n1 = 100
-    n2
-    n3
-)
+const (    n1 = 100    n2    n3)
 ```
 
 上面示例中，常量`n1`、`n2`、`n3`的值都是100。
@@ -575,12 +508,7 @@ const (
 举个例子：
 
 ```go
-const (
-		n1 = iota //0
-		n2        //1
-		n3        //2
-		n4        //3
-	)
+const (		n1 = iota //0		n2        //1		n3        //2		n4        //3	)
 ```
 
 #### 几个常见的`iota`示例:
@@ -588,12 +516,7 @@ const (
 使用`_`跳过某些值
 
 ```go
-const (
-		n1 = iota //0
-		n2        //1
-		_
-		n4        //3
-	)
+const (		n1 = iota //0		n2        //1		_		n4        //3	)
 ```
 
 `iota`声明中间插队
@@ -664,15 +587,7 @@ Go语言支持两种浮点型数：`float32`和`float64`。这两种浮点型数
 打印浮点数时，可以使用`fmt`包配合动词`%f`，代码如下：
 
 ```go
-package main
-import (
-        "fmt"
-        "math"
-)
-func main() {
-        fmt.Printf("%f\n", math.Pi)
-        fmt.Printf("%.2f\n", math.Pi)
-}
+package mainimport (        "fmt"        "math")func main() {        fmt.Printf("%f\n", math.Pi)        fmt.Printf("%.2f\n", math.Pi)}
 ```
 
 #### D. 复数
@@ -680,12 +595,7 @@ func main() {
 complex64和complex128
 
 ```go
-var c1 complex64
-c1 = 1 + 2i
-var c2 complex128
-c2 = 2 + 3i
-fmt.Println(c1)
-fmt.Println(c2)
+var c1 complex64c1 = 1 + 2ivar c2 complex128c2 = 2 + 3ifmt.Println(c1)fmt.Println(c2)
 ```
 
 复数有实部和虚部，complex64的实部和虚部为32位，complex128的实部和虚部为64位。
@@ -709,7 +619,7 @@ s1 := "hello"
 s2 := "你好"
 ```
 
-![image-20210913215518947](pic/image-20210913215518947.png)
+![image-20210913215518947](pic/image-20210913215518947-2116019.png)
 
 ##### 多行字符串
 
@@ -740,8 +650,7 @@ fmt.Println(s1)
 组成每个字符串的元素叫做“字符”，可以通过遍历或者单个获取字符串元素获得字符。 字符用单引号（’）包裹起来，如：
 
 ```go
-var a = '中'
-var b = 'x'
+var a = '中'var b = 'x'
 ```
 
 Go 语言的字符有以下两种：
@@ -843,3 +752,443 @@ if 表达式1 {
 ```
 
 Go语言规定与`if`匹配的左括号`{`必须与`if和表达式`放在同一行，`{`放在其他位置会触发编译错误。 同理，与`else`匹配的`{`也必须与`else`写在同一行，`else`也必须与上一个`if`或`else if`右边的大括号在同一行。
+
+##### if条件判断特殊写法
+
+if条件判断还有一种特殊的写法，可以在 if 表达式之前添加一个执行语句，再根据变量值进行判断，举个例子：
+
+```go
+func ifDemo2() {
+	if score := 65; score >= 90 {
+		fmt.Println("A")
+	} else if score > 75 {
+		fmt.Println("B")
+	} else {
+		fmt.Println("C")
+	}
+}
+```
+
+#### B. switch
+
+使用`switch`语句可方便地对大量的值进行条件判断。
+
+```go
+func switchDemo1() {
+	finger := 3
+	switch finger {
+	case 1:
+		fmt.Println("大拇指")
+	case 2:
+		fmt.Println("食指")
+	case 3:
+		fmt.Println("中指")
+	case 4:
+		fmt.Println("无名指")
+	case 5:
+		fmt.Println("小拇指")
+	default:
+		fmt.Println("无效的输入！")
+	}
+}
+```
+
+Go语言规定每个`switch`只能有一个`default`分支。
+
+一个分支可以有多个值，多个case值中间使用英文逗号分隔。
+
+```go
+func testSwitch3() {
+	switch n := 7; n {
+	case 1, 3, 5, 7, 9:
+		fmt.Println("奇数")
+	case 2, 4, 6, 8:
+		fmt.Println("偶数")
+	default:
+		fmt.Println(n)
+	}
+}
+```
+
+分支还可以使用表达式，这时候switch语句后面不需要再跟判断变量。例如：
+
+```go
+func switchDemo4() {
+	age := 30
+	switch {
+	case age < 25:
+		fmt.Println("好好学习吧")
+	case age > 25 && age < 35:
+		fmt.Println("好好工作吧")
+	case age > 60:
+		fmt.Println("好好享受吧")
+	default:
+		fmt.Println("活着真好")
+	}
+}
+```
+
+##### fallthrough
+
+`fallthrough`语法可以执行满足条件的case的下一个case，是为了兼容C语言中的case设计的。
+
+```go
+func switchDemo5() {
+	s := "a"
+	switch {
+	case s == "a":
+		fmt.Println("a")
+		fallthrough
+	case s == "b":
+		fmt.Println("b")
+	case s == "c":
+		fmt.Println("c")
+	default:
+		fmt.Println("...")
+	}
+}
+```
+
+输出：
+
+```bash
+a
+b
+```
+
+
+
+#### C. for
+
+Go 语言中的所有循环类型均可以使用`for`关键字来完成。
+
+for循环的基本格式如下：
+
+```bash
+for 初始语句;条件表达式;结束语句{
+    循环体语句
+}
+```
+
+条件表达式返回`true`时循环体不停地进行循环，直到条件表达式返回`false`时自动退出循环。
+
+```go
+func forDemo() {
+	for i := 0; i < 10; i++ {
+		fmt.Println(i)
+	}
+}
+```
+
+for循环的初始语句可以被忽略，但是初始语句后的分号必须要写，例如：
+
+```go
+func forDemo2() {
+	i := 0
+	for ; i < 10; i++ {
+		fmt.Println(i)
+	}
+}
+```
+
+for循环的初始语句和结束语句都可以省略，例如：
+
+```go
+func forDemo3() {
+	i := 0
+	for i < 10 {
+		fmt.Println(i)
+		i++
+	}
+}
+```
+
+这种写法类似于其他编程语言中的`while`，在`while`后添加一个条件表达式，满足条件表达式时持续循环，否则结束循环。
+
+##### 无限循环
+
+```go
+for {
+    循环体语句
+}
+```
+
+for循环可以通过`break`、`goto`、`return`、`panic`语句强制退出循环。
+
+##### for range(键值循环)
+
+Go语言中可以使用`for range`遍历数组、切片、字符串、map 及通道（channel）。 通过`for range`遍历的返回值有以下规律：
+
+1. 数组、切片、字符串返回`索引和值`。
+2. map返回键和值。
+3. 通道（channel）只返回通道内的值。
+
+#### D. goto
+
+goto(跳转到指定标签)
+
+`goto`语句通过标签进行代码间的无条件跳转。`goto`语句可以在快速跳出循环、避免重复退出上有一定的帮助。Go语言中使用`goto`语句能简化一些代码的实现过程。 例如双层嵌套的for循环要退出时：
+
+```go
+func gotoDemo1() {
+	var breakFlag bool
+	for i := 0; i < 10; i++ {
+		for j := 0; j < 10; j++ {
+			if j == 2 {
+				// 设置退出标签
+				breakFlag = true
+				break
+			}
+			fmt.Printf("%v-%v\n", i, j)
+		}
+		// 外层for循环判断
+		if breakFlag {
+			break
+		}
+	}
+}
+```
+
+使用`goto`语句能简化代码：
+
+```go
+func gotoDemo2() {
+	for i := 0; i < 10; i++ {
+		for j := 0; j < 10; j++ {
+			if j == 2 {
+				// 设置退出标签
+				goto breakTag
+			}
+			fmt.Printf("%v-%v\n", i, j)
+		}
+	}
+	return
+	// 标签
+breakTag:
+	fmt.Println("结束for循环")
+}
+```
+
+#### E. break
+
+`break`语句可以结束`for`、`switch`和`select`的代码块。
+
+`break`语句还可以在语句后面添加标签，表示退出某个标签对应的代码块，标签要求必须定义在对应的`for`、`switch`和 `select`的代码块上。 举个例子：
+
+```go
+func breakDemo1() {
+BREAKDEMO1:
+	for i := 0; i < 10; i++ {
+		for j := 0; j < 10; j++ {
+			if j == 2 {
+				break BREAKDEMO1
+			}
+			fmt.Printf("%v-%v\n", i, j)
+		}
+	}
+	fmt.Println("...")
+}
+```
+
+F. continue
+
+`continue`语句可以结束当前循环，开始下一次的循环迭代过程，仅限在`for`循环内使用。
+
+在 `continue`语句后添加标签时，表示开始标签对应的循环。例如：
+
+```go
+func continueDemo() {
+forloop1:
+	for i := 0; i < 5; i++ {
+		// forloop2:
+		for j := 0; j < 5; j++ {
+			if i == 2 && j == 2 {
+				continue forloop1
+			}
+			fmt.Printf("%v-%v\n", i, j)
+		}
+	}
+}
+```
+
+### 十、数组
+
+Array(数组)
+
+数组是同一种数据类型元素的集合。 在Go语言中，数组从声明时就确定，使用时可以修改数组成员，但是数组大小不可变化。 基本语法：
+
+A. 数组定义：
+
+```go
+// 定义一个长度为3元素类型为int的数组a
+var a [3]int
+```
+
+比如：`var a [5]int`， 数组的长度必须是常量，并且长度是数组类型的一部分。一旦定义，长度不能变。 `[5]int`和`[10]int`是不同的类型。
+
+```go
+var a [3]int
+var b [4]int
+a = b //不可以这样做，因为此时a和b是不同的类型
+```
+
+数组可以通过下标进行访问，下标是从`0`开始，最后一个元素下标是：`len-1`，访问越界（下标在合法范围之外），则触发访问越界，会panic。
+
+#### B. 数组的初始化
+
+数组的初始化也有很多方式。
+
+##### 方法一
+
+初始化数组时可以使用初始化列表来设置数组元素的值。
+
+```go
+func main() {
+	var testArray [3]int                        //数组会初始化为int类型的零值
+	var numArray = [3]int{1, 2}                 //使用指定的初始值完成初始化
+	var cityArray = [3]string{"北京", "上海", "深圳"} //使用指定的初始值完成初始化
+	fmt.Println(testArray)                      //[0 0 0]
+	fmt.Println(numArray)                       //[1 2 0]
+	fmt.Println(cityArray)                      //[北京 上海 深圳]
+}
+```
+
+##### 方法二
+
+按照上面的方法每次都要确保提供的初始值和数组长度一致，一般情况下我们可以让编译器根据初始值的个数自行推断数组的长度，例如：
+
+```go
+func main() {
+	var testArray [3]int
+	var numArray = [...]int{1, 2}
+	var cityArray = [...]string{"北京", "上海", "深圳"}
+	fmt.Println(testArray)                          //[0 0 0]
+	fmt.Println(numArray)                           //[1 2]
+	fmt.Printf("type of numArray:%T\n", numArray)   //type of numArray:[2]int
+	fmt.Println(cityArray)                          //[北京 上海 深圳]
+	fmt.Printf("type of cityArray:%T\n", cityArray) //type of cityArray:[3]string
+}
+```
+
+##### 方法三
+
+我们还可以使用指定索引值的方式来初始化数组，例如:
+
+```go
+func main() {
+	a := [...]int{1: 1, 3: 5}
+	fmt.Println(a)                  // [0 1 0 5]
+	fmt.Printf("type of a:%T\n", a) //type of a:[4]int
+}
+```
+
+#### C. 数组的遍历
+
+遍历数组a有以下两种方法：
+
+```go
+func main() {
+	var a = [...]string{"北京", "上海", "深圳"}
+	// 方法1：for循环遍历
+	for i := 0; i < len(a); i++ {
+		fmt.Println(a[i])
+	}
+
+	// 方法2：for range遍历
+	for index, value := range a {
+		fmt.Println(index, value)
+	}
+}
+```
+
+#### D. 多维数组
+
+Go语言是支持多维数组的，我们这里以二维数组为例（数组中又嵌套数组）。
+
+##### 二维数组的定义
+
+```go
+func main() {
+	a := [3][2]string{
+		{"北京", "上海"},
+		{"广州", "深圳"},
+		{"成都", "重庆"},
+	}
+	fmt.Println(a) //[[北京 上海] [广州 深圳] [成都 重庆]]
+	fmt.Println(a[2][1]) //支持索引取值:重庆
+}
+```
+
+##### 二维数组的遍历
+
+```go
+func main() {
+	a := [3][2]string{
+		{"北京", "上海"},
+		{"广州", "深圳"},
+		{"成都", "重庆"},
+	}
+	for _, v1 := range a {
+		for _, v2 := range v1 {
+			fmt.Printf("%s\t", v2)
+		}
+		fmt.Println()
+	}
+}
+```
+
+输出：
+
+```bash
+北京	上海	
+广州	深圳	
+成都	重庆	
+```
+
+**注意：** 多维数组**只有第一层**可以使用`...`来让编译器推导数组长度。例如：
+
+```go
+//支持的写法
+a := [...][2]string{
+	{"北京", "上海"},
+	{"广州", "深圳"},
+	{"成都", "重庆"},
+}
+//不支持多维数组的内层使用...
+b := [3][...]string{
+	{"北京", "上海"},
+	{"广州", "深圳"},
+	{"成都", "重庆"},
+}
+```
+
+#### E. 数组是值类型
+
+数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。
+
+```go
+func modifyArray(x [3]int) {
+	x[0] = 100
+}
+
+func modifyArray2(x [3][2]int) {
+	x[2][0] = 100
+}
+func main() {
+	a := [3]int{10, 20, 30}
+	modifyArray(a) //在modify中修改的是a的副本x
+	fmt.Println(a) //[10 20 30]
+	b := [3][2]int{
+		{1, 1},
+		{1, 1},
+		{1, 1},
+	}
+	modifyArray2(b) //在modify中修改的是b的副本x
+	fmt.Println(b)  //[[1 1] [1 1] [1 1]]
+}
+```
+
+**注意：**
+
+1. 数组支持 “==“、”!=” 操作符，因为内存总是被初始化过的。
+2. `[n]*T`表示指针数组，`*[n]T`表示数组指针 。
