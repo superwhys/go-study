@@ -68,5 +68,4 @@ func main() {
 	//fmt.Printf("%T", goods)
 	totalPrice := calculateAllPrice(goods)
 	fmt.Println("total price: ", totalPrice)
-
 }
