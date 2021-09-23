@@ -5,6 +5,11 @@ type phone interface {
 	call()
 }
 
+type Nokia struct {
+	name string
+}
+
+func (phone )
 
 func main() {
 
