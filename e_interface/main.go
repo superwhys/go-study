@@ -75,7 +75,7 @@ func main() {
 
 	// 定义一个空接口x
 	var x interface{}
-	s := "Hello 沙河"
+	s := "Hello World"
 	x = s
 	fmt.Printf("type:%T value:%v\n", x, x)
 	i := 100
