@@ -6,6 +6,17 @@ import (
 	"time"
 )
 
+/*
+context用来控制协程的在何时关闭
+创建context必须要指定一个父context，
+go 提供了两个内置的context： Background 和 TODO
+1. WithCancel
+2. WithDeadline
+3. WithTimeout
+4. WithValue
+ */
+
+
 func test(ctx context.Context, i int) {
 	for {
 		select {
@@ -24,7 +35,6 @@ func test(ctx context.Context, i int) {
 
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
-
 	for i := 0; i < 5; i++ {
 		go test(ctx, i)
 	}
