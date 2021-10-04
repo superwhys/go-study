@@ -47,9 +47,18 @@ func method3() {
 	}
 }
 
+func CreateFile() {
+	cmd := exec.Command("mkdir", "test")
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
 
 func main() {
-	method1()
-	method2()
-	method3()
+	//method1()
+	//method2()
+	//method3()
+	CreateFile()
 }
