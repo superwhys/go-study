@@ -1,0 +1,23 @@
+// 指定protobuf版本
+syntax = "proto3";
+
+// 包名
+package person;
+option go_package = "./person";
+
+
+enum GenderType {
+    SECRET = 0;
+    FEMALE = 1;
+    MALE = 2;
+}
+
+message Person {
+    int32 ids = 1;
+    string name = 2;
+    string number = 3;
+}
+
+message ContactBook {
+    repeated Person persons = 1;
+}
