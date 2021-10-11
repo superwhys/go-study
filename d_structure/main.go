@@ -24,7 +24,7 @@ func main() {
 		gender: "man",
 	}
 	// 结构体实例化方法2
-	// 等价于 var MingMother *person = new(person)
+	// 等价于 var MingMother *pb = new(pb)
 	MingMother := new(person)
 	MingMother.name = "XiaoHong"
 	MingMother.gender = "male"
