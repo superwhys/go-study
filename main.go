@@ -1,7 +1,8 @@
 package main
 
 import (
-	"gitee.com/SuperYongs/go-study/helloworld"
+
+	helloworld "go-study/a_helloworld"
 )
 
 func main() {

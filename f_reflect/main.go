@@ -109,8 +109,17 @@ func main() {
 
 	//  反射对属性的操作
 	// NumField() 和 Field()
+	// 对于Field(), TypeOf 和 ValueOf返回的结果不同
+	// 对于TypeOf 会返回一个StructField 的结构体
+	// 而ValueOf 会返回反射对象对应字段的值
 	p := Person{"写代码的明哥", 27, "male"}
 	v3 := reflect.ValueOf(p)
+	tPerson := reflect.TypeOf(p)
+	fmt.Println("Typeof Field")
+	fmt.Println("第 1 个字段：", tPerson.Field(0))
+	fmt.Println("第 2 个字段：", tPerson.Field(1))
+	fmt.Println("第 3 个字段：", tPerson.Field(2))
+
 	fmt.Println("字段数为：", v3.NumField())
 
 	fmt.Println("第 1 个字段：", v3.Field(0))
